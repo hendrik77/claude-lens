@@ -1,0 +1,21 @@
+# Claude Lens — status line configuration
+# Copy to ~/.claude/statusline.conf and adjust to taste.
+
+# Ordered list of active modules (space-separated, use _ not -)
+# workspace is an alternative to cwd — shows project root instead of current dir
+MODULES="user_host cwd git model tokens cost session_id rate_limit badges tasks"
+
+# Layout
+MAX_WIDTH=120          # fallback if terminal width can't be detected
+SEPARATOR=" | "        # rendered between modules
+SECOND_LINE_BREAK=3    # wrap after module N onto line 2 (0 = disabled)
+
+# Per-module compact overrides
+USER_HOST_COMPACT=short_host   # short_host | user_only | initials
+CWD_COMPACT=basename           # basename | tilde | short (~/D/p)
+MODEL_COMPACT=family           # family (sonnet) | full (claude-sonnet-4-6)
+CONTEXT_BAR_COMPACT=percent    # percent (45%) | bar (▓▓░░ no label)
+TOKENS_COMPACT=numbers         # numbers (12k/200k) | percent (45%)
+RATE_LIMIT_WINDOW=seven_day    # seven_day | five_hour
+
+# cost module uses .cost.total_cost_usd from Claude Code payload (no manual pricing needed)
