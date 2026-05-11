@@ -166,8 +166,12 @@ render_model_compact() {
     family_version)
       local family version
       family=$(printf '%s' "$MODEL" | sed 's/claude-\([a-z]*\)-.*/\1/')
-      version=$(printf '%s' "$MODEL" | sed 's/claude-[a-z]*-//' | tr '-' '.')
-      printf "%s %s" "$family" "$version"
+      if [[ -z "$family" || "$family" == "$MODEL" ]]; then
+        printf "%s" "$MODEL"
+      else
+        version=$(printf '%s' "$MODEL" | sed "s/claude-${family}-//" | tr '-' '.')
+        printf "%s %s" "$family" "$version"
+      fi
       ;;
     *)
       local family
@@ -285,7 +289,7 @@ _rate_label() {
 render_rate_limit_full() {
   local pct; pct=$(_rate_pct)
   [[ -z "$pct" ]] && return
-  local pct_int; pct_int=$(awk "BEGIN {printf \"%d\", $pct}")
+  local pct_int; pct_int=$(awk "BEGIN {printf \"%.0f\", $pct}")
   local pct_fmt; pct_fmt=$(awk "BEGIN {printf \"%.2f\", $pct}")
   local color; color=$(_bar_color "$pct_int")
   local bar;   bar=$(_bar_chars "$pct_int" 6)
@@ -294,7 +298,7 @@ render_rate_limit_full() {
 render_rate_limit_compact() {
   local pct; pct=$(_rate_pct)
   [[ -z "$pct" ]] && return
-  local pct_int; pct_int=$(awk "BEGIN {printf \"%d\", $pct}")
+  local pct_int; pct_int=$(awk "BEGIN {printf \"%.0f\", $pct}")
   local pct_fmt; pct_fmt=$(awk "BEGIN {printf \"%.2f\", $pct}")
   local color; color=$(_bar_color "$pct_int")
   local bar;   bar=$(_bar_chars "$pct_int" 6)

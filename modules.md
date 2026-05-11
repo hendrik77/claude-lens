@@ -6,10 +6,10 @@
 
 | Module | Full output | Compact output | JSON field | Status |
 |---|---|---|---|---|
-| `user_host` | `hendrik@lima-claude` | `h@lima` | `whoami`/`hostname` | ✓ always |
-| `cwd` | `/Users/h.neumann/Devel/plainstaff` | `plainstaff` | `.cwd` | ✓ confirmed |
+| `user_host` | `user@host` | `u@host` | `whoami`/`hostname` | ✓ always |
+| `cwd` | `/home/user/dev/myproject` | `myproject` | `.cwd` | ✓ confirmed |
 | `git` | `main*` | `main*` | git CLI | ✓ script |
-| `model` | `claude-sonnet-4-6` | `sonnet` | `.model.id` | ✓ confirmed |
+| `model` | `claude-sonnet-4-6` | `sonnet 4.6` | `.model.id` | ✓ confirmed |
 | `tokens` | `45k/200k tokens` | `45k/200k` | `.context_window.*` | ✓ confirmed |
 | `context_bar` | `▓▓▓▓░░░░ 45%` | `45%` | `.context_window.*` | ✓ confirmed |
 | `cost` | `~$1.68` | `$1.68` | `.cost.total_cost_usd` | ✓ confirmed |
@@ -18,26 +18,27 @@
 | `permission` | *(hidden)* | *(hidden)* | `.permission_mode` | ✗ absent |
 | `compaction` | *(hidden)* | *(hidden)* | `.compacted` | ✗ absent |
 | `tasks` | `3 tasks` | `3` | `~/.claude/tasks.json` | ✓ hook |
-| `rate_limit` | `▓▓▓░░░ 51% week` | `51%w` | `.rate_limits.*` | ✓ confirmed |
+| `rate_limit` | `▓▓▓░░░ 51.00% week` | `▓▓▓░░░ 51.00%w` | `.rate_limits.*` | ✓ confirmed |
 | `badges` | `high-effort · thinking` | `🔥🤔` | `.effort.level`, `.thinking.enabled` | ✓ confirmed |
-| `workspace` | `~/Devel/plainstaff` | `plainstaff` | `.workspace.project_dir` | ✓ confirmed |
+| `workspace` | `~/dev/myproject` | `myproject` | `.workspace.project_dir` | ✓ confirmed |
 
 Modules marked **✗ absent** hide silently — their fields are not present in the Claude Code statusLine payload (verified against Claude Code 2.1.x).
 
 ## Compact Mode Options
 
 ### USER_HOST_COMPACT
-- `short_host` (default) — `h@lima` (first char of user, first 4 of hostname)
-- `user_only` — `hendrik`
-- `initials` — `h@lim` (first char of each)
+- `short_host` (default) — `u@host` (first char of user, first 4 of hostname)
+- `user_only` — `user`
+- `initials` — `u@host` (first char of each)
 
 ### CWD_COMPACT
-- `basename` (default) — `plainstaff`
-- `tilde` — `~/Devel/plainstaff`
-- `short` — `~/D/plainstaff` (first letter of each intermediate directory)
+- `basename` (default) — `myproject`
+- `tilde` — `~/dev/myproject`
+- `short` — `~/d/myproject` (first letter of each intermediate directory)
 
 ### MODEL_COMPACT
-- `family` (default) — `sonnet`
+- `family_version` (default) — `sonnet 4.6`
+- `family` — `sonnet`
 - `full` — `claude-sonnet-4-6`
 
 ### TOKENS_COMPACT

@@ -14,12 +14,12 @@ user@host | myproject | main | sonnet | 89k/400k | $1.68 | 51%w | 🔥🤔
 | `cwd` | `/home/user/dev/myproject` | `myproject` |
 | `workspace` | `~/dev/myproject` | `myproject` (project root) |
 | `git` | `main*` | `main*` |
-| `model` | `claude-sonnet-4-6` | `sonnet` |
+| `model` | `claude-sonnet-4-6` | `sonnet 4.6` |
 | `tokens` | `89k/400k tokens` | `89k/400k` |
 | `context_bar` | `▓▓▓░░░░░ 22%` | `22%` |
 | `cost` | `~$1.68` | `$1.68` |
 | `session_id` | `#d02959` | `#d029` |
-| `rate_limit` | `▓▓▓░░░ 51% week` | `51%w` |
+| `rate_limit` | `▓▓▓░░░ 51.00% week` | `▓▓▓░░░ 51.00%w` |
 | `badges` | `high-effort · thinking` | `🔥🤔` |
 | `tasks` | `3 tasks` | `3` |
 

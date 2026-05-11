@@ -87,8 +87,18 @@ render_model_full() {
 }
 render_model_compact() {
   [[ -z "$MODEL" ]] && return
-  case "${MODEL_COMPACT:-family}" in
+  case "${MODEL_COMPACT:-family_version}" in
     full) printf "%s" "$MODEL" ;;
+    family_version)
+      local family version
+      family=$(printf '%s' "$MODEL" | sed 's/claude-\([a-z]*\)-.*/\1/')
+      if [[ -z "$family" || "$family" == "$MODEL" ]]; then
+        printf "%s" "$MODEL"
+      else
+        version=$(printf '%s' "$MODEL" | sed "s/claude-${family}-//" | tr '-' '.')
+        printf "%s %s" "$family" "$version"
+      fi
+      ;;
     *)
       local family
       family=$(printf '%s' "$MODEL" | sed 's/claude-\([a-z]*\)-.*/\1/')
@@ -214,15 +224,20 @@ _rate_label() {
 render_rate_limit_full() {
   local pct; pct=$(_rate_pct)
   [[ -z "$pct" ]] && return
-  local color; color=$(_bar_color "$pct")
-  local bar;   bar=$(_bar_chars "$pct" 6)
-  printf "${color}%s %s%% %s${C_RESET}" "$bar" "$pct" "$(_rate_label)"
+  local pct_int; pct_int=$(awk "BEGIN {printf \"%.0f\", $pct}")
+  local pct_fmt; pct_fmt=$(awk "BEGIN {printf \"%.2f\", $pct}")
+  local color; color=$(_bar_color "$pct_int")
+  local bar;   bar=$(_bar_chars "$pct_int" 6)
+  printf "${color}%s %s%% %s${C_RESET}" "$bar" "$pct_fmt" "$(_rate_label)"
 }
 render_rate_limit_compact() {
   local pct; pct=$(_rate_pct)
   [[ -z "$pct" ]] && return
-  local color; color=$(_bar_color "$pct")
-  printf "${color}%s%%w${C_RESET}" "$pct"
+  local pct_int; pct_int=$(awk "BEGIN {printf \"%.0f\", $pct}")
+  local pct_fmt; pct_fmt=$(awk "BEGIN {printf \"%.2f\", $pct}")
+  local color; color=$(_bar_color "$pct_int")
+  local bar;   bar=$(_bar_chars "$pct_int" 6)
+  printf "${color}%s %s%%w${C_RESET}" "$bar" "$pct_fmt"
 }
 
 # ── badges ─────────────────────────────────────────────────────────────────
