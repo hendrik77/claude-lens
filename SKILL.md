@@ -319,15 +319,19 @@ _rate_label() {
 render_rate_limit_full() {
   local pct; pct=$(_rate_pct)
   [[ -z "$pct" ]] && return
-  local color; color=$(_bar_color "$pct")
-  local bar;   bar=$(_bar_chars "$pct" 6)
-  printf "${color}%s %s%% %s${C_RESET}" "$bar" "$pct" "$(_rate_label)"
+  local pct_int; pct_int=$(awk "BEGIN {printf \"%d\", $pct}")
+  local pct_fmt; pct_fmt=$(awk "BEGIN {printf \"%.2f\", $pct}")
+  local color; color=$(_bar_color "$pct_int")
+  local bar;   bar=$(_bar_chars "$pct_int" 6)
+  printf "${color}%s %s%% %s${C_RESET}" "$bar" "$pct_fmt" "$(_rate_label)"
 }
 render_rate_limit_compact() {
   local pct; pct=$(_rate_pct)
   [[ -z "$pct" ]] && return
-  local color; color=$(_bar_color "$pct")
-  printf "${color}%s%%w${C_RESET}" "$pct"
+  local pct_int; pct_int=$(awk "BEGIN {printf \"%d\", $pct}")
+  local pct_fmt; pct_fmt=$(awk "BEGIN {printf \"%.2f\", $pct}")
+  local color; color=$(_bar_color "$pct_int")
+  printf "${color}%s%%w${C_RESET}" "$pct_fmt"
 }
 
 render_badges_full() {
