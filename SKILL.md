@@ -66,46 +66,6 @@ Preserve any existing keys — only add/update the `statusLine` block.
 
 See `modules.md` in this directory for the full 12-module reference, JSON field names, full/compact output examples, and the optional `tasks` hook setup.
 
-## GitHub Deploy Key (for pushing from a new machine)
-
-The repo uses an SSH deploy key so remote VMs can push without sharing your personal key.
-
-Replace `user` and `repo` with your GitHub username and repository name throughout.
-
-### 1. Generate the key
-
-```bash
-ssh-keygen -t ed25519 -C "deploy-key-repo" -f ~/.ssh/repo-deploy -N ""
-cat ~/.ssh/repo-deploy.pub
-```
-
-### 2. Add to GitHub
-
-Go to **github.com/user/repo → Settings → Deploy keys → Add deploy key**  
-Title: `deploy-key-repo` · paste the public key · check **Allow write access**.
-
-### 3. Configure SSH and remote
-
-```bash
-cat >> ~/.ssh/config << 'EOF'
-Host github-repo
-  HostName github.com
-  User git
-  IdentityFile ~/.ssh/repo-deploy
-EOF
-
-git remote set-url origin git@github-repo:user/repo.git
-```
-
-> **Heredoc gotcha:** The `EOF` delimiter must be at column 0 with no leading spaces or the here-document won't close and everything after it lands in the file. If in doubt, write `~/.ssh/config` directly with an editor.
-
-### 4. Test and push
-
-```bash
-ssh -T github-repo   # expect: "Hi user/repo! You've successfully authenticated"
-git push --set-upstream origin main
-```
-
 ## Common Mistakes
 
 - **`command not found: jq`** — install jq
