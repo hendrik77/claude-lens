@@ -3,16 +3,16 @@
 A modular, width-aware status line for [Claude Code](https://claude.ai/code). Shows context window usage, session cost, git branch, model, rate limits, effort mode, and more — auto-compacting when the terminal is narrow.
 
 ```
-hendrik@lima | plainstaff | main | sonnet | 89k/400k | $1.68 | 51%w | 🔥🤔
+user@host | myproject | main | sonnet | 89k/400k | $1.68 | 51%w | 🔥🤔
 ```
 
 ## Modules
 
 | Module | Full | Compact |
 |---|---|---|
-| `user_host` | `hendrik@lima-claude` | `h@lima` |
-| `cwd` | `/Users/h.neumann/Devel/plainstaff` | `plainstaff` |
-| `workspace` | `~/Devel/plainstaff` | `plainstaff` (project root) |
+| `user_host` | `user@host` | `u@host` |
+| `cwd` | `/home/user/dev/myproject` | `myproject` |
+| `workspace` | `~/dev/myproject` | `myproject` (project root) |
 | `git` | `main*` | `main*` |
 | `model` | `claude-sonnet-4-6` | `sonnet` |
 | `tokens` | `89k/400k tokens` | `89k/400k` |
@@ -38,20 +38,20 @@ See [modules.md](modules.md) for the full reference including compact mode optio
 If you use [agentskills](https://agentskills.io), clone directly into your skills directory:
 
 ```bash
-git clone https://github.com/h-neumann/claude-lens ~/.claude/skills/statusline-ps1-with-tokens
+git clone https://github.com/hendrik77/claude-lens ~/.claude/skills/claude-lens
 ```
 
 ### 2. Install the script
 
 ```bash
-cp ~/.claude/skills/statusline-ps1-with-tokens/statusline-command.sh ~/.claude/statusline-command.sh
+cp ~/.claude/skills/claude-lens/statusline-command.sh ~/.claude/statusline-command.sh
 chmod +x ~/.claude/statusline-command.sh
 ```
 
 ### 3. Create your config
 
 ```bash
-cp ~/.claude/skills/statusline-ps1-with-tokens/statusline.conf.example ~/.claude/statusline.conf
+cp ~/.claude/skills/claude-lens/statusline.conf.example ~/.claude/statusline.conf
 ```
 
 Edit `~/.claude/statusline.conf` to enable or reorder modules.
