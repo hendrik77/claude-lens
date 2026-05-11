@@ -1,6 +1,6 @@
 ---
 name: claude-lens
-description: Use when setting up or recreating the Claude Code status line with modular PS1-style display (user@host, cwd, git, tokens, model, cost, and more) on a new machine or lima instance
+description: Use when setting up or recreating the Claude Code status line with modular PS1-style display (user@host, cwd, git, tokens, model, cost, and more) on a new machine or remote VM
 ---
 
 # Status Line: Modular PS1
