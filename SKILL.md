@@ -1,5 +1,5 @@
 ---
-name: statusline-ps1-with-tokens
+name: claude-lens
 description: Use when setting up or recreating the Claude Code status line with modular PS1-style display (user@host, cwd, git, tokens, model, cost, and more) on a new machine or lima instance
 ---
 
