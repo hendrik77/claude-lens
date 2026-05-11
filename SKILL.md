@@ -39,7 +39,7 @@ SECOND_LINE_BREAK=3    # wrap after module N onto line 2 (0 = disabled, grow ins
 # Per-module compact overrides
 USER_HOST_COMPACT=short_host   # short_host | user_only | initials
 CWD_COMPACT=basename           # basename | tilde | short (~/D/p)
-MODEL_COMPACT=family           # family (sonnet) | full (claude-sonnet-4-6)
+MODEL_COMPACT=family_version   # family_version (sonnet 4.6) | family (sonnet) | full (claude-sonnet-4-6)
 CONTEXT_BAR_COMPACT=percent    # percent (45%) | bar (▓▓░░ no label)
 TOKENS_COMPACT=numbers         # numbers (12k/200k) | percent (45%)
 RATE_LIMIT_WINDOW=seven_day    # seven_day | five_hour
@@ -201,8 +201,14 @@ render_model_full() {
 }
 render_model_compact() {
   [[ -z "$MODEL" ]] && return
-  case "${MODEL_COMPACT:-family}" in
+  case "${MODEL_COMPACT:-family_version}" in
     full) printf "%s" "$MODEL" ;;
+    family_version)
+      local family version
+      family=$(printf '%s' "$MODEL" | sed 's/claude-\([a-z]*\)-.*/\1/')
+      version=$(printf '%s' "$MODEL" | sed 's/claude-[a-z]*-//' | tr '-' '.')
+      printf "%s %s" "$family" "$version"
+      ;;
     *)
       local family
       family=$(printf '%s' "$MODEL" | sed 's/claude-\([a-z]*\)-.*/\1/')
